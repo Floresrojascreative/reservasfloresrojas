@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FR Creative Studio | Booking Manager</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="main-header">
+
+        <div class="brand">
+
+            <span class="brand-small">
+                PHOTOGRAPHY MANAGEMENT
+            </span>
+
+            <h1>FR Creative Studio</h1>
+
+            <p>Booking & Financial Management</p>
+
+        </div>
+
+        <div class="header-badge">
+            STUDIO DASHBOARD
+        </div>
+
+    </header>
+
+
+    <main class="dashboard">
+
+        <!-- BIENVENIDA -->
+
+        <section class="welcome">
+
+            <div>
+
+                <span class="section-label">
+                    YOUR CREATIVE BUSINESS
+                </span>
+
+                <h2>Control de Reservas</h2>
+
+                <p>
+                    Administra tus sesiones fotográficas,
+                    clientes, anticipos y pagos desde un
+                    solo lugar.
+                </p>
+
+            </div>
+
+            <button class="primary-btn" id="newBookingBtn">
+                + Nueva reserva
+            </button>
+
+        </section>
+
+
+        <!-- ESTADÍSTICAS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <span>Total de reservas</span>
+
+                <h3 id="totalBookings">0</h3>
+
+                <small>Sesiones registradas</small>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>Confirmadas</span>
+
+                <h3 id="confirmedBookings">0</h3>
+
+                <small>Anticipos completados</small>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>Dinero recibido</span>
+
+                <h3 id="totalReceived">$0.00</h3>
+
+                <small>Pagos registrados</small>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>Saldo pendiente</span>
+
+                <h3 id="totalPending">$0.00</h3>
+
+                <small>Dinero por cobrar</small>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESUMEN FINANCIERO -->
+
+        <section class="financial-summary">
+
+            <span class="section-label">
+                FINANCIAL OVERVIEW
+            </span>
+
+            <h2>Resumen Financiero</h2>
+
+            <div class="financial-grid">
+
+                <div>
+                    <p>Ventas contratadas</p>
+                    <h3 id="totalSales">$0.00</h3>
+                </div>
+
+                <div>
+                    <p>Anticipos requeridos</p>
+                    <h3 id="totalDeposits">$0.00</h3>
+                </div>
+
+                <div>
+                    <p>Total cobrado</p>
+                    <h3 id="financialReceived">$0.00</h3>
+                </div>
+
+            </div>
+
+            <div class="progress-container">
+                <div id="paymentProgress" class="progress-bar"></div>
+            </div>
+
+            <p id="progressText" class="progress-text">
+                0% de ingresos cobrados
+            </p>
+
+        </section>
+
+
+        <!-- CALENDARIO -->
+
+        <section class="calendar-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">SCHEDULE</span>
+                    <h2>Calendario de Sesiones</h2>
+                </div>
+
+                <div class="calendar-navigation">
+
+                    <button id="prevMonth" aria-label="Mes anterior">
+                        ‹
+                    </button>
+
+                    <h3 id="monthTitle"></h3>
+
+                    <button id="nextMonth" aria-label="Mes siguiente">
+                        ›
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="calendar-card">
+
+                <div class="weekdays">
+                    <span>Dom</span>
+                    <span>Lun</span>
+                    <span>Mar</span>
+                    <span>Mié</span>
+                    <span>Jue</span>
+                    <span>Vie</span>
+                    <span>Sáb</span>
+                </div>
+
+                <div class="calendar-grid" id="calendar"></div>
+
+                <div class="calendar-legend">
+
+                    <span>
+                        <i class="legend-dot free"></i>
+                        Sin reservas
+                    </span>
+
+                    <span>
+                        <i class="legend-dot reserved"></i>
+                        Con reservas
+                    </span>
+
+                    <span>
+                        <i class="legend-dot selected"></i>
+                        Fecha seleccionada
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SESIONES DEL DÍA -->
+
+        <section class="daily-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">
+                        DAILY BOOKINGS
+                    </span>
+
+                    <h2 id="selectedDayTitle"></h2>
+                </div>
+
+                <button class="secondary-btn" id="addDayBooking">
+                    + Agregar sesión
+                </button>
+
+            </div>
+
+            <div class="daily-bookings" id="dailyBookings"></div>
+
+        </section>
+
+
+        <!-- CLIENTES -->
+
+        <section class="clients-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">
+                        CLIENT MANAGEMENT
+                    </span>
+
+                    <h2>Registro de Clientes</h2>
+                </div>
+
+                <input
+                    type="search"
+                    id="searchClient"
+                    class="search-input"
+                    placeholder="Buscar cliente..."
+                >
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>CLIENTE</th>
+                            <th>FECHA</th>
+                            <th>SESIÓN</th>
+                            <th>TOTAL</th>
+                            <th>PAGADO</th>
+                            <th>PENDIENTE</th>
+                            <th>ESTADO</th>
+                            <th>ACCIONES</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="bookingsTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESPALDOS -->
+
+        <section class="backup-section">
+
+            <div>
+
+                <h3>Copias de seguridad</h3>
+
+                <p>
+                    Exporta tus reservas y conserva
+                    una copia de tus clientes y pagos.
+                </p>
+
+            </div>
+
+            <div class="backup-actions">
+
+                <button class="secondary-btn" id="exportBtn">
+                    Exportar reservas
+                </button>
+
+                <button class="secondary-btn" id="importBtn">
+                    Importar reservas
+                </button>
+
+                <input
+                    type="file"
+                    id="importFile"
+                    accept=".json,application/json"
+                    hidden
+                >
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- MODAL DE RESERVAS -->
+
+    <div class="modal-overlay" id="bookingModal">
+
+        <div class="modal">
+
+            <div class="modal-header">
+
+                <div>
+                    <span class="section-label">
+                        FR CREATIVE STUDIO
+                    </span>
+
+                    <h2 id="modalTitle">Nueva Reserva</h2>
+                </div>
+
+                <button id="closeModal" class="close-btn"
+                        aria-label="Cerrar">
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="bookingForm">
+
+                <input type="hidden" id="bookingId">
+
+
+                <!-- CLIENTE -->
+
+                <div class="form-group">
+
+                    <label for="clientName">
+                        Nombre del cliente *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="clientName"
+                        placeholder="Ej: Patricia González"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="clientPhone">
+                        Teléfono
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="clientPhone"
+                        placeholder="630-000-0000"
+                    >
+
+                </div>
+
+
+                <!-- FECHA -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="bookingDate">
+                            Fecha de sesión *
+                        </label>
+
+                        <input
+                            type="date"
+                            id="bookingDate"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="bookingTime">
+                            Hora de inicio *
+                        </label>
+
+                        <input
+                            type="time"
+                            id="bookingTime"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- TIPO DE SESIÓN -->
+
+                <div class="form-group">
+
+                    <label for="sessionType">
+                        Tipo de sesión fotográfica *
+                    </label>
+
+                    <select id="sessionType" required>
+
+                        <option value="">
+                            Selecciona una sesión
+                        </option>
+
+                        <optgroup label="Christmas Collection">
+
+                            <option value="mini">
+                                Christmas Mini — $49
+                            </option>
+
+                            <option value="family">
+                                Family Christmas — $79
+                            </option>
+
+                            <option value="premium">
+                                Premium Christmas — $119
+                            </option>
+
+                        </optgroup>
+
+                        <optgroup label="Sesiones generales">
+
+                            <option value="custom">
+                                Sesión personalizada
+                            </option>
+
+                            <option value="other">
+                                Otro tipo de sesión
+                            </option>
+
+                        </optgroup>
+
+                    </select>
+
+                </div>
+
+
+                <!-- DATOS PERSONALIZADOS -->
+
+                <div class="custom-session hidden" id="customSessionFields">
+
+                    <div class="form-group">
+
+                        <label for="customSessionName">
+                            Nombre de la sesión *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="customSessionName"
+                            placeholder="Ej: Sesión de cumpleaños"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="customSessionPrice">
+                            Precio personalizado ($) *
+                        </label>
+
+                        <input
+                            type="number"
+                            id="customSessionPrice"
+                            min="0"
+                            step="0.01"
+                            placeholder="Ej: 150.00"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="customSessionDetails">
+                            Detalles del paquete
+                        </label>
+
+                        <textarea
+                            id="customSessionDetails"
+                            rows="4"
+                            placeholder="Ej: 30 minutos, 10 fotografías editadas, dos cambios de vestuario..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CALCULADORA -->
+
+                <div class="payment-calculator">
+
+                    <h3>Resumen de la Sesión</h3>
+
+                    <div class="calculator-row">
+
+                        <span>Precio total</span>
+
+                        <strong id="packagePrice">
+                            $0.00
+                        </strong>
+
+                    </div>
+
+                    <div class="calculator-row">
+
+                        <span>Anticipo requerido (30%)</span>
+
+                        <strong id="depositAmount">
+                            $0.00
+                        </strong>
+
+                    </div>
+
+                    <div class="calculator-row">
+
+                        <span>Saldo después del anticipo</span>
+
+                        <strong id="remainingAmount">
+                            $0.00
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DINERO RECIBIDO -->
+
+                <div class="form-group">
+
+                    <label for="amountPaid">
+                        Total pagado por el cliente ($)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="amountPaid"
+                        min="0"
+                        step="0.01"
+                        value="0"
+                        required
+                    >
+
+                    <small>
+                        Incluye el anticipo y cualquier
+                        pago adicional recibido.
+                    </small>
+
+                </div>
+
+
+                <!-- SALDO -->
+
+                <div class="payment-status-box">
+
+                    <span>Saldo pendiente</span>
+
+                    <strong id="currentBalance">
+                        $0.00
+                    </strong>
+
+                    <p id="paymentStatusText">
+                        Selecciona una sesión.
+                    </p>
+
+                </div>
+
+
+                <!-- NOTAS -->
+
+                <div class="form-group">
+
+                    <label for="bookingNotes">
+                        Notas adicionales
+                    </label>
+
+                    <textarea
+                        id="bookingNotes"
+                        rows="4"
+                        placeholder="Ej: Escenario, cantidad de personas, vestuario, solicitudes especiales..."
+                    ></textarea>
+
+                </div>
+
+
+                <!-- BOTONES -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        id="cancelModal"
+                        class="cancel-btn"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="primary-btn">
+                        Guardar reserva
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+
+        <p>Made with Love, FR Creative Studios.</p>
+
+        <span>© 2026 FR Creative Studio</span>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
